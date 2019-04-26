@@ -3,6 +3,16 @@ var bodyParser = require('body-parser')
 const fs = require('fs')
 const path = require('path')
 var mysql = require('mysql');
+var vCardsJS = require('vcards-js');
+
+//create a new vCard
+var vCard = vCardsJS();
+
+//set properties
+vCard.firstName = 'zz';
+vCard.lastName = 'cwOffer';
+vCard.organization = 'aks';
+vCard.title = 'zzCW';
 
 const app = express()
 app.set('views', './views')
@@ -35,7 +45,7 @@ app.get('/coolcash', (req, res) => {
 app.post('/download', (req, res) => {
     let number = req.body.phno;
 
-    if (number !== NaN) {
+    if (number !== NaN && number.length==10) {
         con.connect(function (err) {
             if (err) throw err;
             console.log("Connected!");
@@ -43,9 +53,24 @@ app.post('/download', (req, res) => {
             con.query(sql, number, function (err, result) {
                 if (err) throw err;
                 console.log("1 record inserted");
-                res.send(number + ' inserted in database.');
+            });
+
+            //for download contacts from db
+            var sqlget ='SELECT `number` FROM `cooltable`'
+            var phno=[];
+            con.query(sqlget, function (err, result) {
+                if (err) throw err;                
+                result.forEach(element => {
+                    phno.push(element.number);
+                });
+                vCard.cellPhone =phno;
+                vCard.saveToFile('./cooloffer.vcf');
+                res.sendFile(__dirname +'/cooloffer.vcf');
             });
         });
+    }
+    else{
+        res.redirect('/coolcash');
     }
 })
 
