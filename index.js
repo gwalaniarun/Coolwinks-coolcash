@@ -44,37 +44,50 @@ app.get('/coolcash', (req, res) => {
 
 app.post('/download', (req, res) => {
     let number = req.body.phno;
+    let isOld = false;
+    if (number !== NaN && number.length == 10) {
 
-    if (number !== NaN && number.length==10) {
- 
-            console.log("Connected!");
-            var sql = 'INSERT INTO `cooltable`(`number`) VALUES (' + number + ')';
-            con.query(sql, number, function (err, result) {
-                if (err) throw err;
-                console.log("1 record inserted");
-            });
+        function updateDb() {
+            if (!isOld) {
+                var sql = 'INSERT INTO `cooltable`(`number`) VALUES (' + number + ')';
+                con.query(sql, number, function (err, result) {
+                    if (err) throw err;
+                    console.log("1 record inserted");
+                });
+            }
             res.render('download');
+        }
 
+        
+        var sqlget = 'SELECT `number` FROM `cooltable`'
+        con.query(sqlget, function (err, result) {
+            result.forEach(element => {
+                if (number == element.number) {
+                    isOld = true;
+                }
+            });
+            updateDb();
+        })
     }
-    else{
+    else {
         res.redirect('/coolcash');
     }
 })
 app.post('/downloadFun', (req, res) => {
-    
-     
-        //for download contacts from db
-        var sqlget = 'SELECT `number` FROM `cooltable`'
-        var phno = [];
-        con.query(sqlget, function (err, result) {
-            if (err) throw err;
-            result.forEach(element => {
-                phno.push(element.number);
-            });
-            vCard.cellPhone = phno;
-            vCard.saveToFile('./cooloffer.vcf');
-            res.sendFile(__dirname + '/cooloffer.vcf');
+
+
+    //for download contacts from db
+    var sqlget = 'SELECT `number` FROM `cooltable`'
+    var phno = [];
+    con.query(sqlget, function (err, result) {
+        if (err) throw err;
+        result.forEach(element => {
+            phno.push(element.number);
         });
+        vCard.cellPhone = phno;
+        vCard.saveToFile('./cooloffer.vcf');
+        res.sendFile(__dirname + '/cooloffer.vcf');
+    });
 
 })
 
