@@ -14,7 +14,7 @@ vCard.lastName = 'cwOffer';
 vCard.organization = 'aks';
 vCard.title = 'zzCW';
 
-const app = express()
+const app = express();
 app.set('views', './views')
 
 //used for applying css to ejs file
@@ -58,7 +58,7 @@ app.post('/download', (req, res) => {
             res.render('download');
         }
 
-        
+
         var sqlget = 'SELECT `number` FROM `cooltable`'
         con.query(sqlget, function (err, result) {
             result.forEach(element => {
@@ -68,8 +68,7 @@ app.post('/download', (req, res) => {
             });
             updateDb();
         })
-    }
-    else {
+    } else {
         res.redirect('/coolcash');
     }
 })

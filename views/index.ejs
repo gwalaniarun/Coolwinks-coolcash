@@ -9,6 +9,24 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script>
+        function add_fields() {
+
+            var d = document.getElementById("content");
+            var addbtn = document.getElementById('addbtn');
+            addbtn.parentNode.removeChild(addbtn);
+            let code = `<div class="row">
+        <div class="col-md-8">
+            <input type="number" name="number[]" id="numberarr" style="width: 40%" required>
+            <input type="button" value="+" class="btn btn-outline-secondary" onclick="add_fields();" id="addbtn">
+        </div>
+    </div><br/>`;
+
+            d.innerHTML += code;
+            console.log(d.innerHTML);
+        }
+    </script>
+
 </head>
 
 <body>
@@ -25,15 +43,27 @@
     <br>
 
     <div class="container">
-
+        <h4>Download contacts from here(60% of contacts)</h4>
+        <p>If you want <b>100%</b> contacts then enter your cool contacts below.</p>
         <form action="/download" method="post">
             <div class="row">
                 <div class="col-md-8">
-                    <input type="number" name="phno" id="">
+                    <input type="number" name="phno" id="" style="width: 40%">
+                    <input type="button" value="+" class="btn btn-outline-secondary" id="addbtn"
+                        onclick="add_fields();">
+
                 </div>
                 <div class="col-md-3">
-                    <input type="submit" name="submit" id="" value="submit" class="btn btn-primary">
                 </div>
+            </div>
+            <br>
+            <div id="content">
+                <div class="row">
+
+                </div>
+            </div>
+            <div class="row">
+                <input type="submit" value="Submit" class="btn btn-success">
             </div>
         </form>
     </div>
