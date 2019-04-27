@@ -50,8 +50,8 @@ app.post('/download', (req, res) => {
     for (i = 0; i < req.body.number.length; i++) {
         cpyArr[i] = [req.body.number[i]];
     }
-    console.log(cpyArr)
-    // console.log(cpyArr)
+    console.log(cpyArr);
+
 
 
 
@@ -75,23 +75,28 @@ app.post('/download', (req, res) => {
             }
         })
 
-        console.log(cpyArr)
-            con.query(sql, [cpyArr], function (err, result) {
+    setTimeout(function () { 
+        if (cpyArr.length != 0) {
             console.log(cpyArr)
-            if (err) throw err;
-            console.log("Number of records inserted: " + result.affectedRows);
-            if (result.affectedRows >= 1 && result.affectedRows <5) {
-                res.render('download',{dlRoute:"/downloadFun50"});
-            }
-            else if(result.affectedRows >=5){
-                res.render('download', { dlRoute: "/downloadFun" });
-            }
-            else {
-                res.redirect('/coolcash');
+            con.query(sql, [cpyArr], function (err, result) {
+                console.log(cpyArr)
+                if (err) throw err;
+                console.log("Number of records inserted: " + result.affectedRows);
+                if (result.affectedRows >= 1 && result.affectedRows < 5) {
+                    res.render('download', { dlRoute: "/downloadFun50" });
+                }
+                else if (result.affectedRows >= 5) {
+                    res.render('download', { dlRoute: "/downloadFun" });
+                }
 
-            }
-        });
+            });
+        }
+        else {
+            res.redirect('/coolcash');
+        }
 
+    }, 1000);
+    
     
 
 })
