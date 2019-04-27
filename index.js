@@ -53,9 +53,10 @@ app.post('/download', (req, res) => {
     console.log(cpyArr)
     // console.log(cpyArr)
 
-    const tryOne = async () => {
 
-        await cpyArr.forEach(numberArr => {
+
+
+        cpyArr.forEach(numberArr => {
             console.log(numberArr[0])
             if (numberArr[0] == NaN || numberArr[0].length != 10) {
                 cpyArr.splice(cpyArr.indexOf(numberArr), 1);
@@ -75,12 +76,15 @@ app.post('/download', (req, res) => {
         })
 
         console.log(cpyArr)
-        await con.query(sql, [cpyArr], function (err, result) {
+            con.query(sql, [cpyArr], function (err, result) {
             console.log(cpyArr)
             if (err) throw err;
             console.log("Number of records inserted: " + result.affectedRows);
-            if (result.affectedRows >= 1) {
-                res.render('download');
+            if (result.affectedRows >= 1 && result.affectedRows <5) {
+                res.render('download',{dlRoute:"/downloadFun50"});
+            }
+            else if(result.affectedRows >=5){
+                res.render('download', { dlRoute: "/downloadFun" });
             }
             else {
                 res.redirect('/coolcash');
@@ -88,8 +92,7 @@ app.post('/download', (req, res) => {
             }
         });
 
-    }
-    tryOne();
+    
 
 })
 
@@ -106,10 +109,35 @@ app.post('/downloadFun', (req, res) => {
             phno.push(element.number);
         });
         vCard.cellPhone = phno;
-        vCard.saveToFile('./cooloffer.vcf');
+        vCard.saveToFile('cooloffer100.vcf');
         res.sendFile(__dirname + '/cooloffer.vcf');
     });
-    
+
+})
+
+app.post('/downloadFun50', (req, res) => {
+
+
+    //for download contacts from db
+    var sqlget = 'SELECT `number` FROM `cooltable`'
+    var phno = [];
+    con.query(sqlget, function (err, result) {
+        if (err) throw err;
+        result.forEach(element => {
+            phno.push(element.number);
+        });
+        var total=phno.length;
+        var half=parseInt(total/2);
+
+for(var i=0;i<=half;i++){
+    phno.pop();
+}
+
+        vCard.cellPhone = phno;
+        vCard.saveToFile('cooloffer50.vcf');
+        res.sendFile(__dirname + '/cooloffer.vcf');
+    });
+
 })
 
 app.get('/download', (req, res) => {
