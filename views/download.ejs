@@ -6,38 +6,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Download Coolcontacts</title>
-
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <Style>
+        body {
+
+            background: blanchedalmond;
+        }
+
+        .img {
+            border-radius: 30px;
+            border: 3px solid green;
+        }
+
+        .aim {
+            border-left-color: black;
+            padding: 1.25rem;
+            margin-top: 1.25rem;
+            margin-bottom: 1.25rem;
+            border: 1px solid blue;
+            border-left-width: .25rem;
+            border-radius: .25rem;
+        }
+    </Style>
 </head>
 
-<body>
-
-    <div class="container">
-        <h1>Colbrative Coolwinks coolcash loot</h1>
-
-        <br>
-        <h3>Coolwinks offers RS.100 on every purchas of our contacts. So we will get as many as contacts so we will get
-            unlimited coolcash</h3>
-
-    </div>
-
-    <br>
-
-    <div class="container">
-
-        <form action="<%= dlRoute %>" method="post">
-            <div class="row">
-                <div class="col-md-8">
-                </div>
-                <div class="col-md-3">
-                    <input type="submit" name="submit" id="" value="Download" class="btn btn-info">
+<body style="text-align: center; margin: 0 auto;" class="m-4">
+    <img src="../public/images/logo.png" class="img-responsive p-2" alt="CoolCash Steps" height="70px">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="container">
+                <h1>Collaborative Coolwinks coolcash loot</h1>
+                <br>
+                <img src="../public/images/banner1.png" class="img-responsive img" alt="CoolCash Steps"
+                    style="width: 70%">
+                <br><br>
+                <div class="aim">
+                    <h3 style="text-align: left;">How it works:</h3>
+                    <h5 class="font-weight-normal" style="text-align:justify">Coolwinks offers 100 coolcash on every
+                        purchase of our contacts. So
+                        we will get as many as
+                        contacts
+                        and as they purchase on coolwinks we will get unlimited coolcash.
+                    </h5>
                 </div>
             </div>
-        </form>
-        <br>
-
+            <br>
+            <div class="container">
+                <form action="<%= dlRoute %>" method="post">
+                    <input type="submit" name="submit" id="" value="Download" class="btn btn-lg btn-info">
+                </form>
+                <br>
+                <p class="text-left">*Visit this site regulerly for more cool contacts.</p>
+            </div>
+        </div>
+        <div class="col-md-4 p-4" style="border-left: 2px solid black">
+            <img src="../public/images/list.png" class="img-responsive" alt="CoolCash Steps" style="width: 90%">
+        </div>
     </div>
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

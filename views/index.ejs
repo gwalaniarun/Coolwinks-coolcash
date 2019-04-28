@@ -11,62 +11,104 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script>
         function add_fields() {
-
-            var d = document.getElementById("content");
             var addbtn = document.getElementById('addbtn');
             addbtn.parentNode.removeChild(addbtn);
-            let code = `<div class="row">
-        <div class="col-md-8">
-            <input type="number" name="number[]" id="numberarr" style="width: 40%" required>
-            <input type="button" value="+" class="btn btn-outline-secondary" onclick="add_fields();" id="addbtn">
-        </div>
-    </div><br/>`;
-
-            d.innerHTML += code;
-            console.log(d.innerHTML);
+            let code = `<input type="phone" name="number[]" pattern="[6-9][0-9]{9}" id="numberarr" style="width: 70%" placeholder="Enter Coolcontact number" required>
+                    <input type="button" value="+" class="btn btn-outline-primary btn-sm" id="addbtn"
+                        onclick="add_fields();">
+                    <br><br>`;
+            $("#content").append(code);
         }
     </script>
+    <Style>
+        body {
+
+            background: blanchedalmond;
+        }
+
+        #addbtn {
+            position: absolute;
+        }
+
+        .img {
+            border-radius: 30px;
+            border: 3px solid green;
+        }
+
+        .aim {
+            border-left-color: black;
+            padding: 1.25rem;
+            margin-top: 1.25rem;
+            margin-bottom: 1.25rem;
+            border: 1px solid blue;
+            border-left-width: .25rem;
+            border-radius: .25rem;
+        }
+    </Style>
 
 </head>
 
-<body>
-
-    <div class="container">
-        <h1>Colbrative Coolwinks coolcash loot</h1>
-
-        <br>
-        <h3>Coolwinks offers RS.100 on every purchas of our contacts. So we will get as many as contacts so we will get
-            unlimited coolcash</h3>
-
-    </div>
-
-    <br>
-
-    <div class="container">
-        <h4>Download contacts from here(60% of contacts)</h4>
-        <p>If you want <b>100%</b> contacts then enter your cool contacts below.</p>
-        <form action="/download" method="post">
-            <div class="row">
-                <div class="col-md-8">
-                    <input type="number" name="number[]" id="numberarr" style="width: 40%" required>
-                    <input type="button" value="+" class="btn btn-outline-secondary" id="addbtn"
-                        onclick="add_fields();">
-
+<body style="text-align: center; margin: 0 auto;" class="m-4">
+    <img src="../public/images/logo.png" class="img-responsive p-2" alt="CoolCash Steps" height="70px">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="container">
+                <h1>Collaborative Coolwinks coolcash loot</h1>
+                <br>
+                <div class="aim">
+                    <h3 style="text-align: left;">How it works:</h3>
+                    <h5 class="font-weight-normal" style="text-align:justify">Coolwinks offers 100 coolcash on
+                        every purchase
+                        of our contacts. So
+                        we will get as many as
+                        contacts
+                        and as they purchase on coolwinks we will get unlimited coolcash.
+                    </h5>
                 </div>
-                <div class="col-md-3">
-                </div>
+                <h5 style="text-align:justify">For example if 100 people purchase we will get 100 x 100 = 10,000
+                    coolcash.</h5>
             </div>
             <br>
-            <div id="content">
-                <div class="row">
-
-                </div>
+            <div class="container">
+                <p style="color:red;text-align:justify">TIP:If you want <b>100%</b> contacts then enter 5+ your
+                    cool contacts (By clicking
+                    +
+                    button) from coolwinks
+                    app below. Otherwise
+                    you will get
+                    <b>50%</b> cool contacts.</p>
+                <h4 style="text-align:justify">Enter your coolcash registered mobile numbers to Download cool contacts.
+                </h4>
+                <br>
+                <p style="color:red;" style="text-align:justify">Note: If you add contacts that are not registered with
+                    coolwinks then you wiil get
+                    dummy .vcf file
+                    and end
+                    up with no coolcash.</p>
+                <form action="/download" method="post">
+                    <input type="phone" name="number[]" pattern="[6-9][0-9]{9}" id="numberarr"
+                        placeholder="Enter Coolcontact number" style="width: 70%" required>
+                    <input type="button" value="+" class="btn btn-outline-primary btn-sm" id="addbtn"
+                        onclick="add_fields();">
+                    <br><br>
+                    <div id="content">
+                    </div>
+                    <input type="submit" value="Submit" class="btn btn-success">
+                </form>
             </div>
-            <div class="row">
-                <input type="submit" value="Submit" class="btn btn-success">
+            <br>
+            <div class='container'>
+                <img src="../public/images/banner1.PNG" class="img-responsive img" alt="CoolCash Steps"
+                    style="width: 70%">
             </div>
-        </form>
+        </div>
+        <div class="col-md-4 p-4" style="border-left: 2px solid black">
+            <img src="../public/images/list.png" class="img-responsive" alt="CoolCash Steps" style="width: 90%">
+        </div>
     </div>
+
+
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
