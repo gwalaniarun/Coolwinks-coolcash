@@ -148,6 +148,7 @@ for(var i=0;i<=half;i++){
 app.get('/download', (req, res) => {
     res.redirect('/coolcash')
 })
-app.listen(5001, () => {
+let port = process.env.PORT || 5001;
+app.listen(port, () => {
     console.log('started on port 5001')
 })
