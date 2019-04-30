@@ -30,6 +30,7 @@ app.set('view engine', 'ejs')
 
 var con = mysql.createPool({
     host: "localhost",
+    port: 3306,
     user: "root",
     password: "",
     database: "coolwinks"
@@ -38,7 +39,7 @@ var con = mysql.createPool({
 
 
 
-app.get('/coolcash', (req, res) => {
+app.get('/', (req, res) => {
     res.render('index');
 })
 
@@ -56,26 +57,28 @@ app.post('/download', (req, res) => {
 
 
 
-        cpyArr.forEach(numberArr => {
-            console.log(numberArr[0])
-            if (numberArr[0] == NaN || numberArr[0].length != 10) {
-                cpyArr.splice(cpyArr.indexOf(numberArr), 1);
-                console.log('slice1')
-            }
-            else {
-                var sqlget = 'SELECT `number` FROM `cooltable`'
-                con.query(sqlget, function (err, result) {
-                    result.forEach(element => {
-                        if (numberArr[0] == element.number) {
-                            cpyArr.splice(cpyArr.indexOf(numberArr), 1);
-                            console.log('slice2')
-                        }
-                    });
-                })
-            }
-        })
+    cpyArr.forEach(numberArr => {
+        console.log(numberArr[0])
+        if (numberArr[0] == NaN || numberArr[0].length != 10) {
+            cpyArr.splice(cpyArr.indexOf(numberArr), 1);
+            console.log('slice1')
+        }
+        else {
+            var sqlget = 'SELECT `number` FROM `cooltable`'
+            con.query(sqlget, function (err, result) {
+                if (err)
+                    console.log(err);
+                result.forEach(element => {
+                    if (numberArr[0] == element.number) {
+                        cpyArr.splice(cpyArr.indexOf(numberArr), 1);
+                        console.log('slice2')
+                    }
+                });
+            })
+        }
+    })
 
-    setTimeout(function () { 
+    setTimeout(function () {
         if (cpyArr.length != 0) {
             console.log(cpyArr)
             con.query(sql, [cpyArr], function (err, result) {
@@ -92,12 +95,13 @@ app.post('/download', (req, res) => {
             });
         }
         else {
-            res.redirect('/coolcash');
+            // res.redirect('/');
+            res.send(`<script>if(!alert("Entered cool contact number is already exist.Please add unique cool contact number.")) document.location = 'http://coolwinks-coolcash.me';</script>`);
         }
 
     }, 1000);
-    
-    
+
+
 
 })
 
@@ -115,7 +119,7 @@ app.post('/downloadFun', (req, res) => {
         });
         vCard.cellPhone = phno;
         vCard.saveToFile('cooloffer100.vcf');
-        res.sendFile(__dirname + '/cooloffer.vcf');
+        res.sendFile(__dirname + '/cooloffer100.vcf');
     });
 
 })
@@ -131,24 +135,24 @@ app.post('/downloadFun50', (req, res) => {
         result.forEach(element => {
             phno.push(element.number);
         });
-        var total=phno.length;
-        var half=parseInt(total/2);
+        var total = phno.length;
+        var half = parseInt(total / 2);
 
-for(var i=0;i<=half;i++){
-    phno.pop();
-}
+        for (var i = 0; i <= half; i++) {
+            phno.pop();
+        }
 
         vCard.cellPhone = phno;
         vCard.saveToFile('cooloffer50.vcf');
-        res.sendFile(__dirname + '/cooloffer.vcf');
+        res.sendFile(__dirname + '/cooloffer50.vcf');
     });
 
 })
 
 app.get('/download', (req, res) => {
-    res.redirect('/coolcash')
+    res.redirect('/')
 })
-let port = process.env.PORT || 5001;
+let port = process.env.PORT || 80;
 app.listen(port, () => {
-    console.log('started on port 5001')
+    console.log(`started on port ${port}`);
 })
